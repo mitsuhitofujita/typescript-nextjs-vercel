@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 
@@ -49,9 +50,24 @@ export default function Navbar() {
               <div className="h-8 w-20 animate-pulse rounded bg-gray-200"></div>
             ) : session ? (
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-700">
-                  {session.user?.name}
-                </span>
+                <div className="flex items-center space-x-2">
+                  {session.user?.image ? (
+                    <Image 
+                      src={session.user.image} 
+                      alt={session.user.name || "User"} 
+                      width={32} 
+                      height={32} 
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                      {session.user?.name?.charAt(0) || "U"}
+                    </div>
+                  )}
+                  <span className="text-sm text-gray-700">
+                    {session.user?.name}
+                  </span>
+                </div>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
