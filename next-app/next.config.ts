@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['lh3.googleusercontent.com'],
   },
+  serverExternalPackages: ['@prisma/client', 'prisma'],
 };
 
 export default nextConfig;

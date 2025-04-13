@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "@/prisma";
+// import { PrismaAdapter } from "@auth/prisma-adapter";
+// import { prisma } from "@/prisma";
 
 if (!process.env.AUTH_SECRET) {
     throw new Error("Missing AUTH_SECRET environment variable")
@@ -16,7 +16,7 @@ if (!googleClientId || !googleClientSecret) {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: googleClientId,

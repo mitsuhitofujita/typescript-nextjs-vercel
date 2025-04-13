@@ -1,5 +1,22 @@
+import { prisma } from '@/prisma';
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+
+async function saveGreeting() {
+  'use server'
+  
+  try {
+    await prisma.greeting.create({
+      data: {
+        message: "hello"
+      }
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Error saving greeting:", error);
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
+  }
+}
 
 export default async function Dashboard() {
   const session = await auth();
@@ -7,6 +24,8 @@ export default async function Dashboard() {
   if (!session) {
     redirect("/auth/signin");
   }
+
+  await saveGreeting();
 
   return (
     <div className="max-w-3xl mx-auto">
