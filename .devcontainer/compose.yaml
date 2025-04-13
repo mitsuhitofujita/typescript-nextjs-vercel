@@ -1,0 +1,17 @@
+services:
+  nextjs:
+    build: ./services/nextjs
+    tty: true
+    volumes:
+      - ../:/workspace:cached
+  postgres:
+    build: ./services/postgres
+    environment:
+      POSTGRES_PASSWORD: nextjs_app
+      POSTGRES_USER: nextjs_app
+      POSTGRES_DB: nextjs_app_local
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - ./services/postgres/initdb.d:/docker-entrypoint-initdb.d

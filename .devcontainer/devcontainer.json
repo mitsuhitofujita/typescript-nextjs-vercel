@@ -1,17 +1,16 @@
 {
     "name": "node + claude code",
-
-    "image": "mcr.microsoft.com/devcontainers/typescript-node:18",
-
+    "dockerComposeFile": [
+        "compose.yaml"
+    ],
+    "service": "nextjs",
+    "remoteUser": "node",
+    "workspaceFolder": "/workspace",
     "features": {
         "./.features/claude-code": {}
     },
     "forwardPorts": [
         3000
-    ],
-    "runArgs": [
-        "--env-file",
-        ".devcontainer/devcontainer.env"
     ],
     "customizations": {
         "vscode": {
