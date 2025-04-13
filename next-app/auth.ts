@@ -2,11 +2,8 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-if (!process.env.NEXTAUTH_URL) {
-    throw new Error("Missing NEXTAUTH_URL environment variable")
-}
-if (!process.env.NEXTAUTH_SECRET) {
-    throw new Error("Missing NEXTAUTH_SECRET environment variable")
+if (!process.env.AUTH_SECRET) {
+    throw new Error("Missing AUTH_SECRET environment variable")
 }
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID
