@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { auth } from './auth';
 
+// This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
-  const isAuthenticated = !!token;
+  const session = await auth();
+  const isAuthenticated = !!session;
 
   // Define protected routes
   const isProtectedRoute = request.nextUrl.pathname.startsWith("/dashboard");
@@ -19,13 +20,15 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// See: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
+// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    // Match all routes except
-    // - api routes
-    // - static files (/_next, /favicon.ico, etc)
-    // - auth routes
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
     "/((?!api|_next/static|_next/image|favicon.ico|auth/signin).*)",
   ],
 };

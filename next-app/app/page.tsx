@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { auth } from "@/auth";
 import Link from "next/link";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return (
     <div className="mx-auto max-w-3xl text-center">
