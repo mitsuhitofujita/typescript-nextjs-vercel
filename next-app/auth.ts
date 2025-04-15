@@ -1,8 +1,9 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-// import { PrismaAdapter } from "@auth/prisma-adapter";
-// import { prisma } from "@/prisma";
+import { PrismaClient } from "@prisma/client"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+// import { PrismaNeon } from "@prisma/adapter-neon"
 
 if (!process.env.AUTH_SECRET) {
     throw new Error("Missing AUTH_SECRET environment variable")
@@ -15,8 +16,15 @@ if (!googleClientId || !googleClientSecret) {
   throw new Error("Missing Google OAuth credentials")
 }
 
+// if (!process.env.DATABASE_URL) {
+//   throw new Error("Missing DATABASE_URL environment variable")
+// }
+// const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL })
+// const prisma = new PrismaClient({ adapter })
+const prisma = new PrismaClient()
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  // adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: googleClientId,
