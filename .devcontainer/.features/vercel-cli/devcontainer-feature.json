@@ -1,0 +1,9 @@
+{
+    "id": "vercel-cli",
+    "version": "1.0.0",
+    "name": "Vercel CLI",
+    "description": "Installs the Vercel CLI extension",
+    "installsAfter": [
+        "node"
+    ]
+}
